@@ -1,0 +1,23 @@
+libname mydata '/folders/myshortcuts/MYFOLDERS/'access=readonly;
+
+
+data homes;
+    set mydata.BUILDING_PRICES;
+run;
+
+PROC CORR;
+VAR X1 - X9;
+with Y;
+run;
+
+ods graphics on;
+proc princomp data=homes out=homes_components outstat=eigenvectors;
+prefix= z1 z2 z3 z4 z5 z6 z7 z8 z9;
+run;
+ods graphics off;
+
+ods graphics on;
+proc corr data=homes_components plot=matrix;
+var Prin1 Prin2 Prin3 Prin4 Prin5 Prin6 Prin7 Prin8 Prin9;
+run;
+ods graphics off;
